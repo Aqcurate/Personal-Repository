@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 
+import sys
+
 # Getting user input
 def user_input():
     try:
@@ -10,6 +12,7 @@ def user_input():
         assert maximum > minimum
     except:
         print("Error: Invalid input(s)")
+        sys.exit()
 
     return minimum, maximum
 

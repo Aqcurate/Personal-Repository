@@ -16,7 +16,7 @@ def user_input():
 
     return minimum, maximum
 
-# Naive primarlity test
+# Naive prime test
 def is_prime(n):
 
     if n == 1: # 1 is not a prime

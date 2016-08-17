@@ -1,4 +1,4 @@
-#!usr/bin/python3
+#!/usr/bin/python3
 
 import binascii
 
@@ -11,6 +11,8 @@ c = 2984694751921457516249741372506041254611923321685118424626735777008246303022
 e = 3
 p = 238324208831434331628131715304428889871
 q = 296805874594538235115008173244022912163
+N = p * q
+phi = (p-1)*(q-1)
 #---#
 
 # Greatest common divisor finder
@@ -19,7 +21,7 @@ def egcd(a, b):
     if a == 0:
         return (b, 0, 1)
     else:
-        g, y, x = egcd(b %a, a)
+        g, y, x = egcd(b % a, a)
         return (g, x - (b // a) * y, y)
 
 # Modular inverse finder
@@ -33,10 +35,10 @@ def modinv(a, m):
 
 # RSA formula
 
-def rsa(c,e,p,q):
+def rsa(c,e,phi):
     phi = (p-1)*(q-1)
     d = modinv(e, phi)
-    m = pow(c, d, p*q)
+    m = pow(c, d, N)
     return m
 
 # Message to ascii decode
@@ -46,7 +48,7 @@ def flag(m):
     return decoded_flag
 
 def main():
-    m = rsa(c,e,p,q)
+    m = rsa(c,e,phi)
     decoded_flag = flag(m)
     print(decoded_flag)
 

@@ -1,0 +1,310 @@
+bandit.labs.overthewire.org
+---
+bandit0
+- Used ls command to find the file
+- Used the cat command to print out file contents
+Password: boJ9jbbUNNfktd78OOpsqOltutMc3MY1
+
+bandit1
+- Used ls command to find the file
+- Used the cat command to print out file contents
+	- Due to this being a file starting with a dash, adding a ./ (meaning look in the current directory) hides the dash in a sense.
+Password: CV1DtqXWVFXTvM2F0k09SHz0YwRINYA9
+
+bandit2
+- Used ls command to find the file 
+- Used the cat command to print out file contents
+	- Due to this being a file with spaces, you need to add a \ before every space to escape it
+Password:UmHadQclWmgdLOKQ3YNgjWxGoRMb5luK
+
+bandit3
+- Used ls command to find inhere directory
+- Used cd command to move to inhere directory
+- Used ls -a command to find a hidden file
+- Used cat command to read .hidden
+Password:pIwrPrtPN36QITSp3EQaw936yaFoFgAB
+
+bandit4
+- Used cd command to move to inhere directory
+- Used ls to list the files
+- There are many files to choose from, but we can easily brute force the password.
+- Using the cat command, we can read all the files and see which one contains actual human readable characters.
+- We find that file7 contains the password
+Password:koReBOKuIDDepwhWk7jZC0RTdopnAYKh
+
+bandit5
+- Used cd command to move into inhere directory
+- We see there are too many files to brute force
+- Let's narrow down the file options using the find command
+- find . -type f -size 1033c ! -executable
+- Find something in the current directory, that is a file, of 1033 bytes, and not an executable
+- We find maybehere07/.file2 is where the file we need is placed
+- Used cd command to move to maybehere07
+- Used cat command to read what is in .file2
+Password: DXjZPULLxYr17uwoI01bNLQbtFemEgo7
+
+bandit6
+- Used find to filter out unnecessary files
+	- find / -user bandit7 -group bandit6 -size 33c -type f
+- Found the one final where we had persmission
+- Used the cat command on the file
+	- cat /var/lib/dpkg/info/bandit7.password
+Password: HKBPTKQnIay4Fw76bEy8PVxKEDQRKTzs
+
+bandit7
+- Used grep
+	- grep "millionth" data.txt
+Password: cvX2JJa4CFALtqS87jk27qwqGhBM9plV
+
+bandit8
+- We can use sort to sort the files
+	- sort data.txt
+- We can combine it with uniq -c to collapse the list and list the count of each line next to it
+	- sort data.txt | uniq -c
+Password: UsvVyFSfZZWbi6wgC7dAFyFuR6jQQUhR
+
+bandit9
+- We can use strings data.txt to list out readable strings
+- If we look through it, we see the password after the '='s
+Password: truKLdjsbJ5g7yyJ2X2R0o3a5HQJFuLk
+
+bandit10
+- We can base64 decode the data.txt
+	- base64 --decode data.txt
+Password: IFukwKGsFW8MOq3IRFqrxE1hxTNEbUPR
+
+bandit11
+- We can use tr to translate the characters
+	- cat data.txt | tr '[A-Za-z]' '[N-ZA-Mn-za-m]'
+Password: 5Te8Y4drgCRfCx8ugdwuEX8KFC6k2EUu
+
+bandit12
+- Incredibly long problem
+- Created /tmp/noescape using mkdir /tmp/noescape
+- Copied the file over using cp data.txt /tmp/noescape/data.txt
+- Used xxd to reverse file to binary format
+	- xxd -r data.txt data.bin
+- Checked out the new file
+	- file data.bin
+- Changed the extention to match the compression
+	- mv data.bin data.gz
+	- mv data.bin data.bz2
+	- etc...
+- Repeated this until we reach a tar archive
+- Opened tar archive
+	- tar -xf data.bin
+	- etc...
+- Repeated this until we reached more compression
+- Finally reached the final file
+	- cat data8
+Password: 8ZjyCRiBWFYkneahHwxCv3wb2a1ORpYL
+
+bandit13
+- Signed in using rsa key (signing in as bandit14)
+- Connected through localhost
+	- ssh -i ./sshkey.private bandit14@localhost 
+- Read the file
+	- cat /etc/bandit_pass/bandit14
+Password: 4wcYUJFw0k0XLShlDzztnTBHiqxU3b3e
+
+bandit14
+- We will just connect to localhost:30000 through telnet
+	- telnet localhost 30000
+Password: BfMYroe26WYalil77FoDi9qh59eK5xNr
+
+bandit15
+- We can just connect using openssl
+	- openssl s_client -ign_eof -connect localhost:30001
+- Note: We need to add -ign_eof to inhibit shutting down the connection when the end of the file is reached in the input
+Password: cluFn7wTiGryunymYOu4RcffSxQluehd
+
+bandit16
+- First we should scan the ports on localhost from 31000-32000
+	- nmap -p31000-32000 localhost
+- We see 5 ports open
+- After some trial and error, we see the fourth one is the correct port
+	- openssl s_client -connect localhost:31790
+RSAKEY:
+-----BEGIN RSA PRIVATE KEY-----
+MIIEogIBAAKCAQEAvmOkuifmMg6HL2YPIOjon6iWfbp7c3jx34YkYWqUH57SUdyJ
+imZzeyGC0gtZPGujUSxiJSWI/oTqexh+cAMTSMlOJf7+BrJObArnxd9Y7YT2bRPQ
+Ja6Lzb558YW3FZl87ORiO+rW4LCDCNd2lUvLE/GL2GWyuKN0K5iCd5TbtJzEkQTu
+DSt2mcNn4rhAL+JFr56o4T6z8WWAW18BR6yGrMq7Q/kALHYW3OekePQAzL0VUYbW
+JGTi65CxbCnzc/w4+mqQyvmzpWtMAzJTzAzQxNbkR2MBGySxDLrjg0LWN6sK7wNX
+x0YVztz/zbIkPjfkU1jHS+9EbVNj+D1XFOJuaQIDAQABAoIBABagpxpM1aoLWfvD
+KHcj10nqcoBc4oE11aFYQwik7xfW+24pRNuDE6SFthOar69jp5RlLwD1NhPx3iBl
+J9nOM8OJ0VToum43UOS8YxF8WwhXriYGnc1sskbwpXOUDc9uX4+UESzH22P29ovd
+d8WErY0gPxun8pbJLmxkAtWNhpMvfe0050vk9TL5wqbu9AlbssgTcCXkMQnPw9nC
+YNN6DDP2lbcBrvgT9YCNL6C+ZKufD52yOQ9qOkwFTEQpjtF4uNtJom+asvlpmS8A
+vLY9r60wYSvmZhNqBUrj7lyCtXMIu1kkd4w7F77k+DjHoAXyxcUp1DGL51sOmama
++TOWWgECgYEA8JtPxP0GRJ+IQkX262jM3dEIkza8ky5moIwUqYdsx0NxHgRRhORT
+8c8hAuRBb2G82so8vUHk/fur85OEfc9TncnCY2crpoqsghifKLxrLgtT+qDpfZnx
+SatLdt8GfQ85yA7hnWWJ2MxF3NaeSDm75Lsm+tBbAiyc9P2jGRNtMSkCgYEAypHd
+HCctNi/FwjulhttFx/rHYKhLidZDFYeiE/v45bN4yFm8x7R/b0iE7KaszX+Exdvt
+SghaTdcG0Knyw1bpJVyusavPzpaJMjdJ6tcFhVAbAjm7enCIvGCSx+X3l5SiWg0A
+R57hJglezIiVjv3aGwHwvlZvtszK6zV6oXFAu0ECgYAbjo46T4hyP5tJi93V5HDi
+Ttiek7xRVxUl+iU7rWkGAXFpMLFteQEsRr7PJ/lemmEY5eTDAFMLy9FL2m9oQWCg
+R8VdwSk8r9FGLS+9aKcV5PI/WEKlwgXinB3OhYimtiG2Cg5JCqIZFHxD6MjEGOiu
+L8ktHMPvodBwNsSBULpG0QKBgBAplTfC1HOnWiMGOU3KPwYWt0O6CdTkmJOmL8Ni
+blh9elyZ9FsGxsgtRBXRsqXuz7wtsQAgLHxbdLq/ZJQ7YfzOKU4ZxEnabvXnvWkU
+YOdjHdSOoKvDQNWu6ucyLRAWFuISeXw9a/9p7ftpxm0TSgyvmfLF2MIAEwyzRqaM
+77pBAoGAMmjmIJdjp+Ez8duyn3ieo36yrttF5NSsJLAbxFpdlc1gvtGCWW+9Cq0b
+dxviW8+TFVEBl1O4f7HVm6EpTscdDxU+bCXWkfjuRb7Dy9GOtt9JPsX8MBTakzh3
+vBgsyi/sN3RqRBcGU40fOoZyfAMT8s1m/uYv52O6IgeuZ/ujbjY=
+-----END RSA PRIVATE KEY-----
+
+- The RSA key was put in another document I named rsakeylvl17.private
+- Permission had to be changed
+	- chmod 600 rsakey17.private
+- Then simply connect
+	- ssh -i ./rsakeylvl17.private bandit17@bandit.labs.overthewire.org
+
+bandit17
+- We can just use diff to compare the password files
+	- diff passwords.new passwords.old
+Password: kfBf3eYk5BPBRzwjqutbbfE887SVc5Yd
+
+bandit18
+- We can append a command to ssh
+	- ssh bandit18@bandit.labs.overthewireorg cat readme
+Password: IueksS7Ubh8G3DCwVzrTd8rAVOwq3M5x
+
+bandit19
+- We have a program that runs a command as another user
+- We can use this to find the password
+	- /bandit20-do cat /etc/bandit_pass/bandit20
+Password: GbKksEFF4yrVs6il55v6gwY5aVje5f0j
+
+bandit20
+- We need two terminals open for this problem
+- We will set one terminal to listen using netcat
+	- nc -l localhost 6000
+- The port I chose is artibrary
+- We will then execute the program suconnect on the other terminal while specifying the same port
+	- ./suconnect 6000
+- We will enter the old password to receive the next password
+Password: gE269g2h3mw3pwgrj0Ha9Uoqen1c9DGr
+
+bandit21
+- Let's start by going to /etc/cron.d/
+- We see a file named cronjob_bandit22
+- Let's read to see what it says
+	- cat cronjob_bandit22
+- It lists a directory where there is a shell script cronjob_bandit22
+- This is likely the program running from cron
+- Let's move to that directory
+	- cd /usr/bin
+- Let's read the shellscript
+	- cat cronjob_bandit22
+- We see that it changes permissions to the owner can write to a tmp file
+- Then it moves the bandit_pass for bandit 22 to the same tmp file
+- Let's read the tmp file
+	- cat /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+Password: Yk7owGAcWjwMVRwrTesJEwB7WVOiILLI
+
+bandit22
+- Let's rego to /etc/cron.d/
+- Let's read the file named cronjob_bandit23 this time
+- It leads us to another shellscript
+- Let's go to the file and read the shellscript
+	- cd /usr/bin
+	- cat cronjob_bandit22
+- The script gives us a formula for our target tmp file
+- (echo I am user $myname | md5sum | cut -d ' ' -f 1)
+- Let's run the command
+	- echo I am user bandit23 | md5sum | cut -d ' ' -f 1
+- We get the target tmp file of 8ca319486bfbbc3663ea0fbe81326349
+- Let's read the tmp file
+	- cat /tmp/8ca319486bfbbc3663ea0fbe81326349
+Password: jc1udXuA1tiHqjIsL8yaapX5XIAI6i0n
+
+bandit23
+- Let's repeat what we did for the last few problems
+	- cd /etc/crond
+	- cat cronjob_bandit24
+	- cd /usr/bin
+	- cat cronjob_bandit24.sh
+- We see there is a program that executes and deletes all scripts in /var/spool/bandit24
+	- #!/bin/bash
+- Let's create our own temp directory to create a shell script
+	- mkdir /tmp/shellscriptfun
+- In our directory, let's create a shell script
+- Mine is:
+	#!/bin/bash
+	cat /etc/bandit_pass/bandit24 >> /tmp/shellscriptfun/password.txt
+- This will read the password then output in password.txt in our temp directory
+- Let's make it so bandit24 can write to our tmp directory
+	- chmod -R 777 /tmp/shellscriptfun
+- Let's copy the file over to /var/spool/bandit24
+	- cp helpme.sh /var/spool/bandit24
+- Eventually we get back password.txt
+	- cat password.txt
+Password: UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ
+
+bandit24
+- We have to brute force a pin number
+- Let's first see how the daemon works
+- We'll connect to the port
+	- nc localhost 30002
+- I am the pincode checker for user bandit25. Please enter the password for user bandit24 and the secret pincode on a single line, separated by a space.
+- Let's make our script now
+- First, let's make a tmp directory
+	- mkdir /tmp/moreshellscriptfun
+- Let's make a simple for loop shell script
+
+	#!/bin/bash
+
+	for pin in {0000..9999}
+	do
+    	echo UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ" "$pin | nc localhost 30002 >> password2.txt
+	done
+
+- Run this simple script and wait for an hour or so
+- Eventually, you can sort it to find the password
+	- sort password2.txt | uniq -c
+Password: uNG9O58gUE7snukf3bvZ0rxhtnjzSGzG
+
+bandit26
+- Let's start by connecting to localhost on bandit26
+	- ssh -i ./bandit26.sshkey bandit26@localhost
+- It instantly logs us out
+- The clue says the shell for bandit26 is different (not /bin/bash)
+- Let's go to /etc/passwd for information about the shell
+	- cat /etc/passwd
+- We see the shell for bandit26 is /usr/bin/showtext
+- Let's see what is in the file
+	- cat /usr/bin/showtext
+- We see that more ~/text.txt is executed
+- Let's relog onto localhost on bandit26
+- We will make our terminal smaller to more comes into play
+- Once we are logged on, we stay on for the time being
+- If we scroll down, we get logged out
+- We need to be able to type a command somehow
+- If we press v while in more, it opens up a text editor
+- We can read /etc/bandit_pass/bandit26 now in vi
+	- :r /etc/bandit_pass/bandit26
+- Scroll down a bit and we get the password
+Password: 5czgV9L3Xx8JPOyRbXh6lQbmIOWvPT6Z
+
+narnia0
+- Let's go to the problem
+	- cd /narnia
+- We see two programs about narnia0
+- Let's look at the c program
+	- cat narnia0.c
+- It looks like the buffer is 20 bytes long. We can overflow this by inputting more than 20 characters
+- Let's input 'AAAAAAAAAAAAAAAAAAAABBBB' and see if it changes val
+- Indeed it does, now we need to change BBBB to the ascii value of deadbeef
+- Since this is little endian, we need to find 0\xef0\xbe0\xad0\xad0\xde in ascii
+- I made a simple shell script (in /tmp/deadbeeffun)
+
+	#!/bin/bash
+
+	echo -e 'aaaaaaaaaaaaaaaaaaaa\xef\xbe\xad\xde\xaa'
+
+*This will not work without a character at the end for some reason. No idea why this occurs. Only works with some characters too. 
+- Let's input it in the ./narnia0 program
+- cat /etc/narnia_pass/narnia1
+Password: efeidiedae
+
+narnia1

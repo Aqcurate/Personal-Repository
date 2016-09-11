@@ -1,0 +1,14 @@
+Problem:
+
+I'm sure you can retrieve the flag from this file.
+Link[https://gist.github.com/bobacadodl/726628f9c3cd865330493df5d138d3a]
+
+----
+Writeup:
+
+- Find the factors of N using http://www.factordb.com/
+- Simple RSA calculation after this (see script)
+
+----
+ABCTF{th1s_was_h4rd_in_1980}
+

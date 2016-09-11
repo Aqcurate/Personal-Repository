@@ -1,0 +1,15 @@
+Problem:
+
+Can you somehow get the flag from this website? 
+Link[http://yrmyzscnvh.abctf.xyz/web2/]
+----
+Writeup:
+
+- Look in the html for the password: c3RvcHRoYXRqcw
+- Base64 decode the password: stopthatjs
+- Disable javascript usin chrome developer tools
+- Enter the password
+
+----
+Flag: ABCTF{no(d3)_js_is_s3cur3_dasjkhadbkjfbjfdjbfsdajfasdl}
+

@@ -1,0 +1,14 @@
+Problem:
+
+We shot a flag into this file but some things got messed up on the way...
+Link[https://mega.nz/#!z4dlBSTb!5A2R5e6O9xYFYLhAcYUL8vRio4MW6dSfOWdEMaYuE80]
+
+----
+Writeup:
+
+- Rename the file extension to .gz
+- gzip -d the file
+- Read the file
+
+----
+Flag: ABCTF{broken_zipper}

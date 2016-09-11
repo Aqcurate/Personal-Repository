@@ -1,0 +1,15 @@
+Problem:
+
+There is a way to exploit the calculator here.
+Link[http://yrmyzscnvh.abctf.xyz/web7/]
+
+----
+Writeup:
+
+- The expression in the display box goes to an expr command on the shell.
+- We can end the command and insert our own
+	- ; ls
+- Remove the reaadonly from the display and hit the equal sign
+
+----
+Flag: abctf{watch_0ut_f0r_syst3m}

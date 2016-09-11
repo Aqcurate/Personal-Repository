@@ -1,0 +1,16 @@
+Problem:
+
+I RSA encrypted the same message 3 different times with the same exponent. Can you
+decrypt this?
+Link[https://gist.githubusercontent.com/bobacadodl/92430f0c2fb1fc5517b4743904ea17a1/raw/78dbd37a2d21cb9b1de640bed616ffd404de9008/broadcast.txt]
+
+----
+Writeup:
+
+- We know the message and public exponent
+- This is the perfect canidate for chinese remainder theorem
+- See the python script
+
+----
+Flag: abctf{ch!n3s3_rema1nd3r_the0rem_is_to0_op_4_m3}
+

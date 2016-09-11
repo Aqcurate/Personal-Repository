@@ -1,0 +1,19 @@
+Problem:
+
+Well this image means something and we need you to figure it out!
+Link[https://mega.nz/#!zscjkCLI!2h2V1WPmQxxukEaLfR-oIpGx1eiiVo_qRNm9HxauaSc]
+
+----
+Writeup:
+
+- The image consists of black and white squares
+- Reading top to bottom, left to right, we get this
+- aaaaaaaaab aaababaabb aababababb abbbababab aabaabaaba aaaabaaaaa 
+aaabaabbba abbababaaa aaaaaabbab
+	- Black squares: A
+	- White squares: B
+- Baconian decipher the string
+
+----
+Flag: abctflovesbaconian
+	

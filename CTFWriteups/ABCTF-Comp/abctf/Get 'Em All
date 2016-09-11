@@ -1,0 +1,16 @@
+Problem:
+
+I think one of the users data fields holds a flag. If you could find the 
+username.
+Link[http://yrmyzscnvh.abctf.xyz/web4/]
+
+----
+Writeup:
+
+- We check if the input is sanitized
+- Input 1' OR '1' = '1
+- This reveals the whole user data table
+
+----
+Flag: ABCTF{th4t_is_why_you_n33d_to_sanitiz3_inputs} 
+

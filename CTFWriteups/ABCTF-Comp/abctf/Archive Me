@@ -1,0 +1,14 @@
+Problem:
+
+If you could look at our website from a while ago im sure the flag would be
+there...
+
+----
+Writeup:
+
+- We can enter the site into an archiver (waybaack machine)
+- A snapshot from a previous version contains the flag
+----
+Flag: ABCTF{Archives_are_useful}
+
+

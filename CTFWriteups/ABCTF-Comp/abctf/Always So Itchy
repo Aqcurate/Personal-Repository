@@ -1,0 +1,17 @@
+Problem:
+
+Dialga1234 - Johnny Boy
+
+----
+Writeup:
+
+- Searching Dialga1234 gives a scratch project
+- The project is a working terminal
+- We can set up an account with user Dialga1234 and password Johnny Boy
+- Typing in the console the following commands gives us the flag
+	- Wview
+	- 2
+
+----
+Flag: ABCTF{DoYouTHinkISpentTooMuchTimeOnThis}
+

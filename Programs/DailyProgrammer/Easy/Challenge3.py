@@ -10,7 +10,7 @@ def ceaser_shift(shift, message):
     for char in range(len(cipher)):
         dec = ord(cipher[char])
         # Check if it is a letter
-        if dec > 64 and dec < 91:
+        if 64 < dec < 91:
             # Check if it is still later after shifts
             # If it isn't, simply wrap around
             if (dec + shift) > 64:

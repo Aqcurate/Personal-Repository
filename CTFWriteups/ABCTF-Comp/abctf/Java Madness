@@ -1,0 +1,14 @@
+Problem:
+
+Hey if you can get this to pass some tests you could probably have the flag.
+Link[https://mega.nz/#!DpVk3QII!0q_VFSxC2v0bjwodRIPT2UhJTTK3qvYsDMD7JL3qfPo]
+
+----
+Writeup:
+
+- The program reverses the command line arguments
+- We need it to output "abctf is the coolest ctf"
+- arg[0] to arg[5] must be ftc tselooc eht si ftcba
+
+----
+Flag: ABCTF{ftc tselooc eht si ftcba}

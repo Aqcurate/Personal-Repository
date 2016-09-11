@@ -1,0 +1,56 @@
+Problem:
+
+Get this to return true! The grader runs the same script as you got! Here it is. 
+There is no need to submit abctf{} wrapping.
+Link[http://pastebin.com/8JkW5E1m]
+
+----
+Writeup:
+
+- We just need to slowly work our way through
+- There is the code I unobfuscated
+
+def is_flag(s):
+
+	শ = int(s[pow(ord(s[0]), 2) - 105 * 69 + 19:]) # divisable by three 
+		# s[0] has to be 'U' else the index is too large
+		# int(s[-1]) is শ  if s[0] is 'U'
+
+	ϗ = list(filter(lambda q: q % 3 == 0, [শ, শ * 2, শ * 3, শ * 4, শ * 5])) 
+		# int(s[-1]) has to be 3/6/9 to satisfy q % 3 == 0
+
+	if len(ϗ) != 5:
+		return False
+			# States 5 needs to be in ϗ
+	
+	Ӝ = s[1:-2]
+			# Ӝ ranges from s[1] to s[-2]
+	if (len([n for n in list(Ӝ) if lambda y: i in ϗ])) != 8:
+		return False
+			# States 8 needs to be in Ӝ
+			# We can infer s must range from s[0] to s[10]
+
+	ڪ = [(ord(x) - 48) for x in list(s)] # fill in the blanks
+			# ڪ is comprised of ord(x) from list(s) minus 48
+
+   	if s.count('U') != 3:
+       		return False
+			# 'U' appears exactly 3 times
+
+   	if Ӝ.index("​_") != Ӝ[::-1].index("_​"):
+       		return False
+			# '_' must be mirrored in Ӝ
+
+   if (s[ڪ[3]]) != 'U':
+       return False
+	# ڪ[3] must point to an s that points to 'U'
+	# If ڪ[3] is 0, it will point to the first 'U'
+	# ord('0') - 48 equals 0
+
+   return True
+
+- Possible Answer: UU_0UBB_BB6
+----
+Flag: UU_0UBB_BB6
+
+

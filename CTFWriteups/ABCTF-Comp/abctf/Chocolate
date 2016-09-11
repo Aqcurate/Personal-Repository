@@ -1,0 +1,15 @@
+Problem:
+
+If you could become admin you would get a flag.
+Link[http://yrmyzscnvh.abctf.xyz/web3/]
+
+----
+
+- There is a cookie called 'cookie': e2FkbWluOmZhbHNlfQ%3D%3D
+- Base64 decode it to get a URL encoded phrase: %7Badmin%3Afalse%7D%0D%C3%DC
+- Change false to true and re-basee64 encode it: e2FkbWluOnRydWV9%3D%3D
+- Change the cookie to the new base64 encoded text
+- Refresh and we get the flag
+
+----
+Flag: ABCTF{don't_trust_th3_cooki3}

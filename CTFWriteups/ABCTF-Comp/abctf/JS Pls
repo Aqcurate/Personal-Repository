@@ -1,0 +1,42 @@
+Problem:
+
+Can you figure out the flag from this Have fun ;)
+Link[http://pastebin.com/raw/9Y55hxbw?]
+
+----
+Writeup:
+
+- First, base64 decode the huge block of text
+- We can slowly decode the jsfuck into readable javascript
+
+process.stdin.resume();
+process.stdin.setEncoding('utf8');
+console.log("Give me a flag");
+process.stdin.on('data',(t)=>{
+	t=t.trim();
+		if(t.length===19){ // 19 Characters
+			if(t.substr(5)==="ABCTF"){ // ABCTF first 5 characters
+				if(t["5"].charCodeAt(0)===t["18"].charCodeAt(0)-2 && t["5"].charCodeAt(0)===123){ // Braces
+					if(t.substr("6","4")===Object.keys(process.versions)[1]){ // Char 6-10 is node
+						if(t["10"]===t["13"]&&t["10"].charCodeAt(0)===95){ // Char 10 and 13 is _
+							if(t.substr("11","2")==="is"){ // Char 11-12 is is
+								if(t.substr("14","4")==="w4Ck"){ // Char 14-17 is w4Ck
+									console.log("nice job!");
+									process.exit();
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	console.log("nope!");
+	process.exit();
+});
+
+- This is the code I ended with
+- Reverse engineering the code, I get the flag
+
+----
+Flag: abctf{node_is_w4Ck}
+

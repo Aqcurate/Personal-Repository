@@ -1,0 +1,16 @@
+Problem:
+
+Check this out!
+Link[https://gist.github.com/bobacadodl/41b53695639135b5d989be52eabd3210]
+
+----
+Writeup:
+
+- The title likely refers to sexy primes (primes 6 numbers apart)
+- We can square root 'N' to approximate the primes
+- We can guess and check for primes +-3 from the sqrt(N) on factordb.com
+- After that, it is a simple RSA decrypt
+
+----
+Flag: ABCTF{i_h4ve_an_RSA_fetish_;)}
+

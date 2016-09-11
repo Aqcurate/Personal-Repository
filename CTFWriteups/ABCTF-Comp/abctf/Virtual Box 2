@@ -1,0 +1,12 @@
+Problem:
+
+Darn, I found this flag so I put it in flag 1.doc but I can't seem to be able
+to see it anymore.
+----
+Writeup:
+
+- The flag is in flag 1.doc but in the color white
+- Highlight it to uncover the message
+
+----
+Flag: ABCTF{H1DDEN_AWAY}

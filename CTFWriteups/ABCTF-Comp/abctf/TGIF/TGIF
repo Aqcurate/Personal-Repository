@@ -1,0 +1,14 @@
+Problem:
+
+Friday is the best day of the week, and so I really want to know how many 
+Fridays there are in this file. But, with a twist. I want to know how many 
+Fridays there are one year later than each date.
+Link[https://gist.github.com/LiamRahav/0cbf82b8bc3a41deafc0403f1b1dd573]
+
+----
+Writeup:
+
+- Using my program date.py, I calculate the number of fridays to be 194
+
+----
+Flag: abctf{194}

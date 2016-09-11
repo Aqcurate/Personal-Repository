@@ -1,0 +1,16 @@
+Problem:
+
+If you could bypass the login you could get the flag.
+Link[http://yrmyzscnvh.abctf.xyz/web6/]
+
+----
+Writeup:
+
+- STRCMP is being used to check the password
+- If strcmp = 0, we get admin access
+- If we error strcmp, strmp will by default equal 0
+- We can pass in an array
+- http://yrmyzscnvh.abctf.xyz/web6/?password[]=a
+
+----
+Flag: abctf{always_know_whats_going_on}

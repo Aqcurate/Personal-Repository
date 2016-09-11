@@ -1,0 +1,14 @@
+Problem:
+
+Just put in the password for the flag! Link[http://yrmyzscnvh.abctf.xyz/web1/]
+
+----
+Writeup:
+
+- Look in the HTML for the password: 7xfsnj65gsklsjsdkj
+- Enter the password
+- Flag fades, look in HTML again for the flag
+
+----
+Flag: ABCTF{insp3ct3d_dat_3l3m3nt}
+

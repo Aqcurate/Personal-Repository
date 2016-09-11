@@ -1,0 +1,13 @@
+Problem:
+
+I accidentally closed out this odd message I found. Can you get it back?
+
+----
+Writeup:
+
+- Go into browser history in order to see an image
+- The image is in the font Wingdings 3
+- Decode it for the flag
+
+----
+Flag: ABCTF{ITS_C00L_L00KING_BACK}

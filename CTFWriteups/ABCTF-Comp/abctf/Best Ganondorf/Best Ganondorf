@@ -1,0 +1,13 @@
+Problem:
+
+You know the deal. Find a flag in this this file?
+Link[https://mega.nz/#!C8NlibJR!dkMFHZU38QY5rrK4ibjr7-J5Mx42m9dl31qzqmJ_rJg]
+
+----
+Writeup:
+
+- We get a broken JPEG
+- If we append the hex with FF D8, the JPEG be fixed
+
+----
+Flag: abctf{tfw_kage_r3kt_nyway}

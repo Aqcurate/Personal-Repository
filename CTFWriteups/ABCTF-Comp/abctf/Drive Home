@@ -1,0 +1,15 @@
+Problem:
+
+We found this link scribbled on a piece of paper:
+document/1_TxYCrk5vIMlUjiB1OioXmR7b-Uq_a9aPIh9JyYlPNs/edit?usp=sharing. It is
+broken but we need you to fix it!
+
+----
+- This is a google drive link missing /d/
+- We can fix it
+- https://docs.google.com/document/d/1_TxYCrk5vIMlUjiB1OioXmR7b-Uq_a9aPIh9JyYlPNs/edit
+- The document has the flag
+
+----
+Flag: abctf{g00gle_driv3_1s_my_f4v0r1t3}
+

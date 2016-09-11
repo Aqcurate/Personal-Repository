@@ -1,0 +1,17 @@
+Problem:
+
+There is something a little off about this picture. If you could help us we 
+could give you some points! Just find us a flag!
+Link[https://mega.nz/#!q0UyATRS!k2MYymbvEHYy9nVA0awvKMwgKvrEIrPkZ2stcMuGf-E]
+
+----
+Writeup:
+
+- This is a very large file
+- There might be a file hidden inside
+	- foremost PurpleThing.png
+- We find there is a jpg hidden inside the png
+- Foremost extracts the file for us
+
+----
+Flag: ABCTF{PNG_S0_C00l}

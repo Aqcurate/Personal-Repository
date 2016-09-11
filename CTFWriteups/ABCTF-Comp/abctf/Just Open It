@@ -1,0 +1,13 @@
+Problem:
+
+I'm almost positive we put a flag in this file. Can you find it for me?
+Link[https://mega.nz/#!q8FBHAqD!D2-GX_5pi5rb1cfjNGTV-NDWTahZiJlFfDl5PlUY8z8]
+
+----
+Writeup:
+
+- Download th efile and open it as a text document
+- CTRL+F ABCTF{
+
+----
+Flag: ABCTF{forensics_1_tooo_easy?}

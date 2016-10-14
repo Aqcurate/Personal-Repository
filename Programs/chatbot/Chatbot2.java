@@ -1,4 +1,4 @@
-ppackage org.sstctf.chatbot;
+package org.sstctf.chatbot;
 
 /**
  *  Proof of concept of adding allowing two chatbots to talk to each other

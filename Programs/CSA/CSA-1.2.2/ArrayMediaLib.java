@@ -23,16 +23,16 @@ public class ArrayMediaLib {
 		Song[] topTenSongs = 
 			{
 				new Song("The Twist"),
-                new Song("Smooth"),
-                new Song("Mack the Knife"),
-                new Song("How Do I Live"),
-                new Song("Party Rock Anthem"),
-                new Song("I Gotta Feeling"),
-                new Song("Macarena (Bayside Boys Mix)"),
-                new Song("Physical"),
-                new Song("You Light Up My Life"),
-                new Song("My Jude")
-            };
+				new Song("Smooth"),
+				new Song("Mack the Knife"),
+				new Song("How Do I Live"),
+				new Song("Party Rock Anthem"),
+				new Song("I Gotta Feeling"),
+				new Song("Macarena (Bayside Boys Mix)"),
+				new Song("Physical"),
+				new Song("You Light Up My Life"),
+				new Song("My Jude")
+            		};
 
 		/*
 		for (Song s: topTenSongs) {
@@ -41,59 +41,59 @@ public class ArrayMediaLib {
 		*/
 		
 		/*
-        for (Song changeSong : topTenSongs) {
-            changeSong.setTitle("test");
-         }
-         */
+		for (Song changeSong : topTenSongs) {
+			changeSong.setTitle("test");
+		}
+		*/
        
-        /*
-        for (Song changeSong: topTenSongs) {
-            changeSong = new Song("test");
-            System.out.println(changeSong.getTitle());
-        }
-        */
+		/*
+		for (Song changeSong: topTenSongs) {
+			changeSong = new Song("test");
+			System.out.println(changeSong.getTitle());
+		}
+		*/
        
-        /*
-        for (int i = 0; i < topTenSongs.length; i++) {
-            topTenSongs[i] = new Song("test");
-        }
-        */
+		/*
+		for (int i = 0; i < topTenSongs.length; i++) {
+			topTenSongs[i] = new Song("test");
+		}
+		*/
        
-        /*
-        for (int i = 0; i < topTenSongs.length; i++) {
-            if (i % 3 == 2) {
-                topTenSongs[i].setPrice(0.99);
-            } else {
-                topTenSongs[i].setPrice(1.29);
-            }
-        }
-        */
+		/*
+		for (int i = 0; i < topTenSongs.length; i++) {
+			if (i % 3 == 2) {
+				topTenSongs[i].setPrice(0.99);
+			} else {
+				topTenSongs[i].setPrice(1.29);
+			}
+		}
+		*/
         
-        /*
-        for (Song showSong : topTenSongs) {
-            System.out.println(showSong.getTitle());
-            System.out.println(showSong.getPrice());
-        }
-        */
+		/*
+		for (Song showSong : topTenSongs) {
+			System.out.println(showSong.getTitle());
+			System.out.println(showSong.getPrice());
+		}
+		*/
        
-        /*
-        for (int i = 0; i < topTenSongs.length && i < 5; i++) {
-            System.out.println(topTenSongs[i].getTitle());
-        }
-        */
+		/*
+		for (int i = 0; i < topTenSongs.length && i < 5; i++) {
+			System.out.println(topTenSongs[i].getTitle());
+		}
+		*/
         
-        /*
-        for (int i = 0; i < topTenSongs.length; i++) {
-            if (i % 2 == 0)
-                System.out.println(topTenSongs[i].getTitle());
-        }
-        */
+		/*
+		for (int i = 0; i < topTenSongs.length; i++) {
+			if (i % 2 == 0)
+				System.out.println(topTenSongs[i].getTitle());
+		}
+		*/
        
-       int counter = 0;
-       for (Song showSong : topTenSongs) {
-           if (counter % 2 == 0) 
-                System.out.println(showSong.getTitle());
-           counter++;
-       }
+		int counter = 0;
+		for (Song showSong : topTenSongs) {
+			if (counter % 2 == 0) 
+			System.out.println(showSong.getTitle());
+		counter++;
+		}
 	}
 }

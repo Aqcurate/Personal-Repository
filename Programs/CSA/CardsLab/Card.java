@@ -44,8 +44,8 @@ public class Card {
 		
 		Card other = (Card) obj;
 		
-		return (this.rank == other.getRank() &&
-				this.suit == other.getSuit() &&
+		return (this.rank.equals(other.getRank()) &&
+				this.suit.equals(other.getSuit()) &&
 				this.point == other.getPoint());
 	}
 	

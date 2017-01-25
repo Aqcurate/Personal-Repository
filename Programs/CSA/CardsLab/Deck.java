@@ -17,6 +17,7 @@ public class Deck {
 		}
 		
 		size = cards.size();
+		shuffle();
 	}
 	
 	public boolean isEmpty() {
@@ -31,6 +32,20 @@ public class Deck {
 		if (size == 0) return null;
 		size--;
 		return cards.get(size);
+	}
+	
+	public void shuffle() {
+		/*
+		System.out.println("Before shuffling: ");
+		System.out.println(this);
+		for(int i = 0; i < 7; i++) {
+			System.out.println("Amount of times shuffled: " + (i+1));
+			cards = Shuffler.realisticShuffle(cards);
+			System.out.println(this);
+		}
+		*/
+		cards = Shuffler.selectionShuffle(cards);
+		size = cards.size();
 	}
 	
 	@Override

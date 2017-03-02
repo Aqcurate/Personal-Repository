@@ -1,4 +1,5 @@
 import java.lang.Math;
+import java.util.Arrays;
 
 public class MaxPath {
     public static int[][] findSolution(int[][] grid) {
@@ -39,13 +40,15 @@ public class MaxPath {
                 i -= 1;
             }
         }
-        
+
+        int currentPathLength = path.length();
+
         if (i == 0) {
-            for (int k = 0; i < pathLength - path.length(); i++) {
+            for (int k = 0; k < pathLength - currentPathLength; k++) {
                 path = "R" + path;
             }
         } else {
-            for (int k = 0; i < pathLength - path.length(); i++) {
+            for (int k = 0; k < pathLength - currentPathLength; k++) {
                 path = "D" + path;
             }
         }
@@ -54,9 +57,22 @@ public class MaxPath {
     }
 
     public static void main(String[] args) {
-        int[][] grid = {{1, 6, 3, 5},
+        // Walls
+        int x = Integer.MIN_VALUE;
+        int[][] grid1 = {{1, 6, 3, 5},
                         {2, 9, 7, 2},
                         {3, 4, 10, 4}};
-        System.out.println(findPath(findSolution(grid)));
+        int[][] grid2 = {{0, 3, 0, 2, 0, 4, 0, 1, 0},
+                        {1, x, 0, x, 2, x, 4, x, 4},
+                        {0, 3, 0, 2, 0, 5, 0, 2, 0},
+                        {3, x, 6, x, 8, x, 6, x, 8},
+                        {0, 5, 0, 7, 0, 3, 0, 4, 0},
+                        {6, x, 4, x, 5, x, 2, x, 1},
+                        {0, 3, 0, 7, 0, 0, 0, 2, 0},
+                        {7, x, 6, x, 3, x, 4, x, 3},
+                        {0, 1, 0, 3, 0, 2, 0, 2, 0}};
+
+        System.out.println(findPath(findSolution(grid1)));
+        System.out.println(findPath(findSolution(grid2)));
     }
 }

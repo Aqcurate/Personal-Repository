@@ -55,6 +55,16 @@ public class MaxPath {
 
         return path;
     }
+    
+    public static String findPath(int[][] solution, String format) {
+        if (format == "staggered") {
+            return findPath(solution).replaceAll("(.)(\\1)", "$1");
+        } else if (format == "standard") {
+            return findPath(solution);
+        }
+
+        return null;
+    }
 
     public static void main(String[] args) {
         // Walls
@@ -73,6 +83,6 @@ public class MaxPath {
                         {0, 1, 0, 3, 0, 2, 0, 2, 0}};
 
         System.out.println(findPath(findSolution(grid1)));
-        System.out.println(findPath(findSolution(grid2)));
+        System.out.println(findPath(findSolution(grid2), "staggered"));
     }
 }

@@ -1,10 +1,8 @@
 import java.lang.Math;
-import java.util.Arrays;
 
 public class MaxPath {
     public static int[][] findSolution(int[][] grid) {
         int[][] solution = new int[grid.length][grid[0].length];
-        String path = "";
 
         solution[0][0] = grid[0][0];
 

@@ -1,7 +1,7 @@
 import java.lang.Math;
 
 public class MaxPath {
-    public static int findMaxPath(int[][] grid) {
+    public static int[][] findSolution(int[][] grid) {
         int[][] solution = new int[grid.length][grid[0].length];
         String path = "";
 
@@ -21,16 +21,42 @@ public class MaxPath {
             }
         }
 
-        int i, j;
-        while (
+        return solution;
+    }
 
-        return solution[grid.length-1][grid[0].length-1];
+    public static String findPath(int[][] solution) {
+        String path = "";
+        int i = solution.length - 1;
+        int j = solution[0].length - 1;
+        int pathLength = i + j;
+
+        while (i != 0 && j != 0) {
+            if (solution[i][j-1] > solution[i-1][j]) {
+                path = "R" + path;
+                j -= 1;
+            } else {
+                path = "D" + path;
+                i -= 1;
+            }
+        }
+        
+        if (i == 0) {
+            for (int k = 0; i < pathLength - path.length(); i++) {
+                path = "R" + path;
+            }
+        } else {
+            for (int k = 0; i < pathLength - path.length(); i++) {
+                path = "D" + path;
+            }
+        }
+
+        return path;
     }
 
     public static void main(String[] args) {
         int[][] grid = {{1, 6, 3, 5},
                         {2, 9, 7, 2},
                         {3, 4, 10, 4}};
-        System.out.println(findMaxPath(grid));
+        System.out.println(findPath(findSolution(grid)));
     }
 }

@@ -27,7 +27,6 @@ public class MaxPath {
         String path = "";
         int i = solution.length - 1;
         int j = solution[0].length - 1;
-        int pathLength = i + j;
 
         while (i != 0 && j != 0) {
             if (solution[i][j-1] > solution[i-1][j]) {
@@ -39,14 +38,12 @@ public class MaxPath {
             }
         }
 
-        int currentPathLength = path.length();
-
         if (i == 0) {
-            for (int k = 0; k < pathLength - currentPathLength; k++) {
+            for (int k = 0; k < j; k++) {
                 path = "R" + path;
             }
         } else {
-            for (int k = 0; k < pathLength - currentPathLength; k++) {
+            for (int k = 0; k < i; k++) {
                 path = "D" + path;
             }
         }

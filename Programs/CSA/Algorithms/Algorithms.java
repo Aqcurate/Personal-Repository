@@ -27,80 +27,13 @@ public class Algorithms {
         return intArray;
     }
 
-    private static void swap(int[] arr, int i, int j) {
+    protected static void swap(int[] arr, int i, int j) {
         int temp = arr[i];
         arr[i] = arr[j];
         arr[j] = temp;
     }
 
-    public static void insertionSort(int[] data) {
-        int j;
-        for (int i = 1; i < data.length; i++) {
-            j = i;
-            while (j > 0 && data[j-1] > data[j]) {
-                swap(data, j, j-1);
-                j--;
-            }
-        }
-    }
-
-    public static void selectionSort(int[] data) {
-        int min;
-        for (int i = 0; i < data.length-1; i++) {
-            min = i;
-            for (int j = i+1; j < data.length; j++) {
-                if (data[j] < data[min]) {
-                    min = j;
-                }
-            }
-            swap(data, i, min);
-        }
-    }
-    
-    public static void mergeSort(int[] data) {
-        int temp[] = new int[data.length];
-        mergeSort(data, temp, 0, data.length - 1); 
-    }
-
-    private static void mergeSort(int[] data, int[] temp, int left, int right) {
-        if (left < right) {
-            int mid = left + (right - left) / 2;
-
-            mergeSort(data, temp, left, mid);
-            mergeSort(data, temp, mid + 1, right);
-
-            mergeHalves(data, temp, left, mid, right);
-        }
-    }
-
-    private static void mergeHalves(int[] data, int[] temp, int left, int mid, int right) {
-        for (int i = left; i <= right; i++) {
-            temp[i] = data[i];
-        }
-
-        int i = left;
-        int j = mid + 1;
-        int k = left;
-
-        while (i <= mid && j <= right) {
-            if (temp[i] <= temp[j]) {
-                data[k] = temp[i];
-                i++;
-            } else {
-                data[k] = temp[j];
-                j++;
-            }
-            k++;
-        }
-
-        while (i <= mid) {
-            data[k] = temp[i];
-            i++;
-            k++;
-        }
-    }
-
-    public static void printSorts() {
+    public static void testSorts() {
         Scanner s = new Scanner(System.in);
         System.out.println("Enter a file in 'input/':");
         String file = s.next();
@@ -118,13 +51,13 @@ public class Algorithms {
         long before = System.currentTimeMillis();
         switch(sortNumber) {
             case 1:
-                mergeSort(data);
+                Merge.sort(data);
                 break;
             case 2:
-                selectionSort(data);
+                Selection.sort(data);
                 break;
             case 3:
-                insertionSort(data);
+                Insertion.sort(data);
                 break;
             default:
                 System.out.println("Invalid Selection.");
@@ -145,10 +78,16 @@ public class Algorithms {
         System.out.println();
 
         System.out.println("Time Taken: " + (after-before) + " ms");
+        s.close();
+    }
+
+    public static void testAllSorts() {
+        String[] files = {"input1.txt", "input2.txt", "input3.txt", "input4.txt"};
+        
     }
 
     public static void main(String[] args) {
-        printSorts();
+        testSorts();
         System.exit(0);
     }
 }

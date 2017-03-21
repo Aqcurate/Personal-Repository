@@ -58,23 +58,22 @@ public class Algorithms {
     }
     
     public static void mergeSort(int[] data) {
-        mergeSort(data, 0, data.length - 1); 
+        int temp[] = new int[data.length];
+        mergeSort(data, temp, 0, data.length - 1); 
     }
 
-    private static void mergeSort(int[] data, int left, int right) {
+    private static void mergeSort(int[] data, int[] temp, int left, int right) {
         if (left < right) {
             int mid = left + (right - left) / 2;
 
-            mergeSort(data, left, mid);
-            mergeSort(data, mid + 1, right);
+            mergeSort(data, temp, left, mid);
+            mergeSort(data, temp, mid + 1, right);
 
-            mergeHalves(data, left, mid, right);
+            mergeHalves(data, temp, left, mid, right);
         }
     }
 
-    private static void mergeHalves(int[] data, int left, int mid, int right) {
-        int temp[] = new int[data.length];
-
+    private static void mergeHalves(int[] data, int[] temp, int left, int mid, int right) {
         for (int i = left; i <= right; i++) {
             temp[i] = data[i];
         }
@@ -137,13 +136,13 @@ public class Algorithms {
         for (int i = 0; i < 10; i++) {
             System.out.print(data[i] + " ");
         }
-        System.out.println("\n");
+        System.out.println();
 
         System.out.print("Last 10 Sorted Elements: ");
         for (int i = data.length-10; i < data.length; i++) {
             System.out.print(data[i] + " ");
         }
-        System.out.println("\n");
+        System.out.println();
 
         System.out.println("Time Taken: " + (after-before) + " ms");
     }

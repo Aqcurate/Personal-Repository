@@ -1,21 +1,30 @@
-public class Merge extends Algorithms {
-    public static void sort(int[] data) {
-        int temp[] = new int[data.length];
-        sort(data, temp, 0, data.length - 1); 
+public class Merge extends Sorts {
+
+    int[] data = null;
+    int[] temp = null;
+
+    public void sort(int[] data) {
+        this.data = data;
+        this.temp = new int[data.length];
+        sort(0, data.length - 1); 
     }
 
-    private static void sort(int[] data, int[] temp, int left, int right) {
+    public String toString() {
+        return "Merge";
+    }
+
+    private void sort(int left, int right) {
         if (left < right) {
             int mid = left + (right - left) / 2;
 
-            sort(data, temp, left, mid);
-            sort(data, temp, mid + 1, right);
+            sort(left, mid);
+            sort(mid + 1, right);
 
-            merge(data, temp, left, mid, right);
+            merge(left, mid, right);
         }
     }
 
-    private static void merge(int[] data, int[] temp, int left, int mid, int right) {
+    private void merge(int left, int mid, int right) {
         for (int i = left; i <= right; i++) {
             temp[i] = data[i];
         }

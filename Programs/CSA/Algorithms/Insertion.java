@@ -1,5 +1,5 @@
-public class Insertion extends Algorithms {
-    public static void sort(int[] data) {
+public class Insertion extends Sorts {
+    public void sort(int[] data) {
         int j;
         for (int i = 1; i < data.length; i++) {
             j = i;
@@ -8,5 +8,9 @@ public class Insertion extends Algorithms {
                 j--;
             }
         }
+    }
+
+    public String toString() {
+        return "Insertion";
     }
 }

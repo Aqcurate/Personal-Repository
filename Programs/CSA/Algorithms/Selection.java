@@ -1,5 +1,5 @@
-public class Selection extends Algorithms {
-    public static void sort(int[] data) {
+public class Selection extends Sorts {
+    public void sort(int[] data) {
         int min;
         for (int i = 0; i < data.length-1; i++) {
             min = i;
@@ -10,5 +10,9 @@ public class Selection extends Algorithms {
             }
             swap(data, i, min);
         }
+    }
+
+    public String toString() {
+        return "Selection";
     }
 }

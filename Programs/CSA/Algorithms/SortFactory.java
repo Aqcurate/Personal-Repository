@@ -13,6 +13,7 @@ public class SortFactory {
      * 3 -> Insertion Object
      * 
      * @param sortNum the number corresponding to a sort object
+     * @return sort obejct
      */
     public Sorts getSort(int sortNum) {
         switch(sortNum) {

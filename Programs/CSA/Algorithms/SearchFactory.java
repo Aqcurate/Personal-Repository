@@ -12,6 +12,7 @@ public class SearchFactory {
      * 2 -> Binary Object
      * 
      * @param sortNum the number corresponding to a sort object
+     * @return search object
      */
     public Searches getSearch(int searchNum) {
         switch(searchNum) {

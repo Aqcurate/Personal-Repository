@@ -187,7 +187,7 @@ public class Main {
         SortFactory sortFactory = new SortFactory();
         Sorts[] allSorts = sortFactory.getAllSorts();
         // Input files to be tested
-        String[] allFiles = {"input1.txt", "input2.txt", "input3.txt"};
+        String[] allFiles = {"input1.txt", "input2.txt", "input3.txt", "input4.txt"};
         String[][] elapsedTable = new String[allSorts.length+1][allFiles.length+1];
 
         // Empty square on 0, 0 table
@@ -320,7 +320,7 @@ public class Main {
     public static void main(String[] args) {
         Main main = new Main();
         // main.testSorts();          // Testing individual sorts
-        main.testSearches();        // Testing individual searches
+        main.testSearches();       // Testing individual searches
         // main.testAllSorts();       // Testing all sorts
         // main.testAllSearches();    // Testing all searches
     }

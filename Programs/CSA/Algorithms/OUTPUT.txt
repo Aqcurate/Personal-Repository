@@ -1,0 +1,5 @@
+Elapsed Table (ms): 
+            input1.txt   input2.txt   input3.txt   input4.txt   
+Merge       1            1            8            102          
+Selection   2            34           2273         356010       
+Insertion   3            21           1394         141600       
